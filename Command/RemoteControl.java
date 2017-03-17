@@ -1,8 +1,10 @@
+import java.util.*;
+
 public class RemoteControl {
     private static final int TOTAL_BUTTONS = 7;
     private Command[] onCommands;
     private Command[] offCommands;
-    private Command undo;
+    private Stack<Command> undo;
 
     public RemoteControl() {
         onCommands = new Command[TOTAL_BUTTONS];
@@ -13,7 +15,7 @@ public class RemoteControl {
             onCommands[i] = noCommand;
             offCommands[i] = noCommand;
         }
-        undo = noCommand;
+        undo = new Stack<Command>();
     }
 
     public void setCommand(int slot, Command onCommand, Command offCommand) {
@@ -24,18 +26,22 @@ public class RemoteControl {
     public void pushOnButton(int slot) {
         System.out.println("On pressed: " + slot);
         onCommands[slot].execute();
-        undo = onCommands[slot];
+        undo.push(onCommands[slot]);
     }
 
     public void pushOffButton(int slot) {
         System.out.println("Off pressed: " + slot);
         offCommands[slot].execute();
-        undo = offCommands[slot];
+        undo.push(offCommands[slot]);
     }
 
     public void pushUndo() {
-        System.out.println("Undo pressed");
-        undo.undo();
+        System.out.println("UNDO pressed");
+        if (!undo.empty()) {
+            undo.pop().undo();
+        } else {
+            System.out.println("Nothing to undo!");
+        }
     }
 }
 

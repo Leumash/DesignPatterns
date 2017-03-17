@@ -21,6 +21,10 @@ public class Client {
         controller.pushOnButton(0);
         controller.pushOffButton(1);
         controller.pushUndo();
+        controller.pushUndo();
+        controller.pushUndo();
+        controller.pushUndo();
+        controller.pushUndo();
     }
 }
 
